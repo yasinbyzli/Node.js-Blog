@@ -6,6 +6,10 @@ const app = express();
 const hostName = '127.0.0.1';
 const port = 3000;
 
+// ? test url'ne gittiğin zaman console bir şey yazdır.
+// ? middleware 3 adet parametre alır
+app.use(express.static('public'))
+
 app.get('/', (req, res) => {
     // ? __dirname -> app.js'in bulunduğu dizini verir.
     res.sendFile(path.resolve(__dirname, 'index.html'));
@@ -22,14 +26,9 @@ app.get('/contact', (req, res) => {
 })
 
 
-app.get('/users/:userId/movies/:moviesId', (req, res) => {
-    res.send(`
-        <h1>Kullanıcı Adı : ${req.params.userId}<h1>
-        <h1>Film adı : ${req.params.moviesId}</h1>
-    `)
-})
 
 app.listen(port, hostName, () => {
     console.log(`Server Çalışıyor, http://${hostName}:${port}`);
 })
 
+ 
