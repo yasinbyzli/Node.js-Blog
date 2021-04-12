@@ -1,32 +1,35 @@
-// * Protocol
-const http = require('http');
+const path = require('path');
+const express = require('express');
 
-// ? farklı dosyalarla iletişime geçmek için.
-const fs = require('fs');
+const app = express();
 
-const hostname = '127.0.0.1';
+const hostName = '127.0.0.1';
 const port = 3000;
 
-
-const indexPage = fs.readFileSync('index.html');
-const contactPage = fs.readFileSync('./Contact.html');
-const aboutPage = fs.readFileSync('./About.html');
-const notFoundPage = fs.readFileSync('./404.html');
-
-// ? parametre olarak callback fonksiyon alıyor.
-const server = http.createServer((req, res) => {
-    if (req.url === '/') {
-        return res.end(indexPage);
-    } else if (req.url === '/about'){
-        return res.end(aboutPage);
-    } else if (req.url === '/contact'){
-        return res.end(contactPage);
-    } else {
-        res.statusCode = 404;
-        res.end(notFoundPage);
-    }
-});
-
-server.listen(port, hostname, () => {
-    console.log(`Server Çalışıyor, http://${hostname}:${port}`);
+app.get('/', (req, res) => {
+    // ? __dirname -> app.js'in bulunduğu dizini verir.
+    res.sendFile(path.resolve(__dirname, 'index.html'));
 })
+
+app.get('/about', (req, res) => {
+    // ? __dirname -> app.js'in bulunduğu dizini verir.
+    res.sendFile(path.resolve(__dirname, 'about.html'));
+})
+
+app.get('/contact', (req, res) => {
+    // ? __dirname -> app.js'in bulunduğu dizini verir.
+    res.sendFile(path.resolve(__dirname, 'contact.html'));
+})
+
+
+app.get('/users/:userId/movies/:moviesId', (req, res) => {
+    res.send(`
+        <h1>Kullanıcı Adı : ${req.params.userId}<h1>
+        <h1>Film adı : ${req.params.moviesId}</h1>
+    `)
+})
+
+app.listen(port, hostName, () => {
+    console.log(`Server Çalışıyor, http://${hostName}:${port}`);
+})
+
