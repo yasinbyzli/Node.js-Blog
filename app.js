@@ -23,9 +23,16 @@ app.use(express.static('public'))
 app.engine('handlebars', exphbs());
 app.set('view engine', 'handlebars');
 
+// parse application/x-www-form-urlencoded
+app.use(express.urlencoded({ extended: false }))
+// parse application/json
+app.use(express.json())
+
 // ? Routes işlemleri - Middleware 
 const main = require('./routes/main');
+const posts = require('./routes/posts');
 app.use('/', main);
+app.use('/posts', posts);
 
 
 app.listen(port, hostName, () => {

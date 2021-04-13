@@ -13,15 +13,6 @@ router.get('/blog', (req,res) => {
     res.render('site/blog');
 })
 
-router.get('/posts/new', (req,res) => {
-    res.render('site/addpost');
-})
-
-router.post('/posts/test', (req,res) => {
-    res.send('TEST OK');
-})
-
-
 router.get('/contact', (req,res) => {
     res.render('site/contact');
 })
