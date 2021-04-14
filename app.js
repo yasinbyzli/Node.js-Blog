@@ -5,6 +5,7 @@ const exphbs = require('express-handlebars');
 const mongoose = require('mongoose');
 // dosya eklemek için
 const fileUpload = require('express-fileupload'); 
+const generateDate = require('./helpers/generateDate').generateDate;
 
 const hostName = '127.0.0.1';
 const port = 3000;
@@ -25,7 +26,7 @@ app.use(fileUpload());
 // ? Middleware
 app.use(express.static('public'))
 
-app.engine('handlebars', exphbs());
+app.engine('handlebars', exphbs({helpers : {generateDate}}));
 app.set('view engine', 'handlebars');
 
 // parse application/x-www-form-urlencoded - Veritabanı verileri yakalayıp kaydetmek için
@@ -33,9 +34,20 @@ app.use(express.urlencoded({ extended: false }))
 // parse application/json
 app.use(express.json())
 
+/* kendi middleware'mız.
+const myMiddleWare = (req, res, next) => {
+  console.log('LOGGED');
+  next();
+} 
+
+app.use('/', myMiddleWare);
+*/
+
+
 // ? Routes işlemleri - Middleware 
 const main = require('./routes/main');
 const posts = require('./routes/posts');
+
 app.use('/', main);
 app.use('/posts', posts);
 
