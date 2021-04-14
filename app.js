@@ -3,6 +3,8 @@ const express = require('express');
 const exphbs = require('express-handlebars');
 // veritabanı bağlantısı için
 const mongoose = require('mongoose');
+// dosya eklemek için
+const fileUpload = require('express-fileupload'); 
 
 const hostName = '127.0.0.1';
 const port = 3000;
@@ -15,7 +17,10 @@ mongoose.connect('mongodb://127.0.0.1/nodeblog_db', {
   useCreateIndex: true
 });
 
+
 const app = express();
+
+app.use(fileUpload());
 
 // ? Middleware
 app.use(express.static('public'))
@@ -23,7 +28,7 @@ app.use(express.static('public'))
 app.engine('handlebars', exphbs());
 app.set('view engine', 'handlebars');
 
-// parse application/x-www-form-urlencoded
+// parse application/x-www-form-urlencoded - Veritabanı verileri yakalayıp kaydetmek için
 app.use(express.urlencoded({ extended: false }))
 // parse application/json
 app.use(express.json())
@@ -38,5 +43,3 @@ app.use('/posts', posts);
 app.listen(port, hostName, () => {
     console.log(`Server Çalışıyor, http://${hostName}:${port}`);
 })
-
- 
