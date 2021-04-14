@@ -8,7 +8,7 @@ router.get('/new', (req,res) => {
 })
 
 router.get('/:id', (req,res) => {
-    Post.findById(req.params.id).then(post => {
+    Post.findById(req.params.id).lean().then(post => {
         res.render('site/post', {post : post});
     })
 })
@@ -21,7 +21,7 @@ router.post('/test', (req,res) => {
     // Veri tabanına veriyi ekler
     Post.create({
         ...req.body,
-        post_image : `/public/img/postimages/${post_image.name}`
+        post_image : `/img/postimages/${post_image.name}`
     });
     res.redirect('/');
 })
