@@ -35,7 +35,6 @@ router.post('/login', (req,res) => {
             res.redirect('/users/register');
         }
     })
-
 })
 
 router.get('/logout', (req, res) => {
