@@ -31,6 +31,15 @@ app.use(expressSession({
   store : connectMongo.create({ mongoUrl : 'mongodb://127.0.0.1/nodeblog_db' })
 }))
 
+// ? Flash - Message Middleware
+app.use((req, res, next) => {
+  res.locals.sessionFlash = req.session.sessionFlash;
+  delete req.session.sessionFlash;
+  next();
+})
+
+
+// ? Dosya yukleme işlemi için
 app.use(fileUpload());
 
 // ? Middleware
@@ -43,16 +52,6 @@ app.set('view engine', 'handlebars');
 app.use(express.urlencoded({ extended: false }))
 // parse application/json
 app.use(express.json())
-
-/* kendi middleware'mız.
-const myMiddleWare = (req, res, next) => {
-  console.log('LOGGED');
-  next();
-} 
-
-app.use('/', myMiddleWare);
-*/
-
 
 // ? Routes işlemleri - Middleware 
 const main = require('./routes/main');

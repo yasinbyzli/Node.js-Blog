@@ -8,7 +8,11 @@ router.get('/register', (req, res) => {
 
 router.post('/register', (req, res) => {
     User.create(req.body, (error, user) => {
-        res.redirect('/');
+        req.session.sessionFlash = {
+            type : 'alert alert-success',
+            message : 'Kullanıcı başarılı bir şekilde oluşturuldu'
+        }
+        res.redirect('/users/login');
     })
 })
 
