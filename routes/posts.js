@@ -2,14 +2,17 @@ const express = require('express');
 const router = express.Router();
 const Post = require('../models/Post');
 const path = require('path');
+const Category = require('../models/Category');
 
 router.get('/new', (req,res) => {
     // Kullanıcı login olmamıssa
-    if (req.session.userId) {
-        return res.render('site/addpost');
+    if (!req.session.userId) {
+        res.redirect('/users/login');
     } 
     
-    res.redirect('/users/login');
+    Category.find({}).lean().then(categories => {
+        res.render('site/addpost', {categories : categories})
+    })
 
 })
 
