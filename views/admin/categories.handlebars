@@ -45,8 +45,14 @@
                         {{#each categories}}
                         <tr>
                             <th scope="row">{{_id}}</th>
-                            <td>{{name}}</td>
-                            <td>Otto</td>
+                            <td >{{name}}</td>
+                            <td>
+                                <!-- TODO: silme işlemi yap -->
+                                <from action="admin/categories/{{_id}}?_method=DELETE" method="POST">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <button type="submit" class="btn btn-danger">DELETE</button>
+                                </from>
+                            </td>
                         </tr>
                         {{/each}}
                     </tbody>

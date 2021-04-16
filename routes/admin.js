@@ -7,7 +7,7 @@ router.get("/", (req, res) => {
 })
 
 router.get('/categories', (req, res) => {
-    Category.find({}).lean().then(categories => {
+    Category.find({}).sort({$natural : -1}).lean().then(categories => {
         res.render('admin/categories', {categories : categories})
     })
 })
@@ -15,9 +15,17 @@ router.get('/categories', (req, res) => {
 router.post('/categories', (req, res) => {
     Category.create(req.body, (error, category) => {
        if (!error) {
-        res.redirect('/admin/categories')
+        res.redirect('/admin/categories');
        } 
     });
+})
+
+router.delete('/categories/:_id', (req, res) => {
+    Category.remove({_id : req.params._id}).then(() => {
+        res.redirect('/categories');
+    }).catch(err => {
+        console.log(err);
+    })
 })
 
 module.exports = router;

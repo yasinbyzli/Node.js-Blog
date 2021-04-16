@@ -11,7 +11,7 @@ router.get('/admin', (req,res) => {
 })
 
 router.get('/blog', (req,res) => {
-    Post.find({}).lean()
+    Post.find({}).sort({$natural : -1}).lean()
         .exec((error, post) => {
             res.render('site/blog', {posts : post});
         })    

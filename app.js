@@ -9,6 +9,8 @@ const generateDate = require("./helpers/generateDate").generateDate;
 // session
 const expressSession = require("express-session");
 const connectMongo = require("connect-mongo");
+// delete
+var methodOverride = require('method-override');
 
 const hostName = "127.0.0.1";
 const port = 3000;
@@ -45,6 +47,9 @@ app.use(fileUpload());
 
 // ? Middleware
 app.use(express.static("public"));
+
+// ? Delete override middleware
+app.use(methodOverride('_method'))
 
 app.engine("handlebars", exphbs({ helpers: { generateDate } }));
 app.set("view engine", "handlebars");
