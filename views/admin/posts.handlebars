@@ -1,0 +1,46 @@
+</nav>
+
+<!--==========================
+    INSIDE HERO SECTION Section
+============================-->
+<section class="page-image page-image-about md-padding">
+    <h1 class="text-white text-center">Posts</h1>
+</section>
+
+<!--==========================
+    ABOUTUS Section
+============================-->
+<section id="aboutus" class="md-padding">
+    <div class="container">
+        {{>admin-nav}}
+        <div class="row">
+
+            <div class="col-md-12 mt-5">
+                <table class="table">
+                    <thead style="background-color: #FD8A10; color: #fff">
+                        <tr>
+                            <th scope="col">Tıtle</th>
+                            <th scope="col">Category Name</th>
+                            <th scope="col">Edit</th>
+                            <th scope="col">Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each posts}}
+                        <tr>
+                            <th scope="row"><a href="/posts/{{_id}}">{{title}}</a></th>
+                            <td>{{category.name}}</td>
+                            <td>Edit</td>
+                            <td>Delete</td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--==========================
+    ABOUTUS Section
+============================-->

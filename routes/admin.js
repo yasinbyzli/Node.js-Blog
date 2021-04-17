@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const Category = require('../models/Category');
+const Post = require('../models/Post');
+const User = require('../models/User');
 
 router.get("/", (req, res) => {
     res.render('/admin/admin')
@@ -25,6 +27,12 @@ router.delete('/categories/:_id', (req, res) => {
         res.redirect('/categories');
     }).catch(err => {
         console.log(err);
+    })
+})
+
+router.get('/posts', (req, res) => {
+    Post.find({}).populate({path : 'category', model : Category}).sort({$natural : -1}).lean().then(posts => {
+        res.render('admin/posts', {posts : posts});
     })
 })
 
